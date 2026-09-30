@@ -6,11 +6,11 @@
    text   — не выводится пока, пригодится для страницы кейса
    image  — путь к картинке, например 'img/finly.jpg' ('' = цветная заглушка) */
 const projects = [
-  { title: 'Project 1',    tag: 'Design', year: '2026', color: '#2B3BFF', image: '' },
-  { title: 'Project 2',         tag: 'Dashboard',  year: '2025', color: '#FF5CA8', image: '' },
-  { title: 'Project 3',    tag: 'Web',        year: '2025', color: '#5EE6B0', image: '' },
-  { title: 'Project 4',          tag: 'Mobile app', year: '2024', color: '#8B7CF6', image: '' },
-  { title: 'Project 5',   tag: 'Web',        year: '2024', color: '#FFD84A', image: '' }
+  { title: 'Project 1',    tag: 'Design', year: '2026', color: '#52284B', image: '' },
+  { title: 'Project 2',         tag: 'Dashboard',  year: '2025', color: '#E5383B', image: '' },
+  { title: 'Project 3',    tag: 'Web',        year: '2025', color: '#C7C2CC', image: '' },
+  { title: 'Project 4',          tag: 'Mobile app', year: '2024', color: '#A4161A', image: '' },
+  { title: 'Project 5',   tag: 'Web',        year: '2024', color: '#FCBF49', image: '' }
 ];
 
 function renderProjects() {

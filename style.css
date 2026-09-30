@@ -1,13 +1,13 @@
 /* ---------- 1. Цвета и шрифты: меняй здесь ---------- */
 :root {
-  --bg: #E8E6FF;
-  --ink: #14133A;
-  --muted: #55547E;
-  --blue: #2B3BFF;
-  --pink: #FF5CA8;
-  --yellow: #FFD84A;
-  --mint: #5EE6B0;
-  --lilac: #C9C3FF;
+  --bg: #F4EFE4;
+  --ink: #2A2438;
+  --muted: #6B6480;
+  --blue: #52284B;
+  --pink: #E5383B;
+  --yellow: #FCBF49;
+  --mint: #C7C2CC;
+  --lilac: #C7C2CC;
   --border: 2px solid var(--ink);
   --shadow: 5px 5px 0 var(--ink);
   --ease: cubic-bezier(.2, .7, .1, 1);
@@ -79,6 +79,24 @@ h1 { font-size: clamp(2.7rem, 5.6vw, 5.2rem); line-height: .95; }
 .marquee__track span { display: flex; align-items: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(1.4rem, 3vw, 2.2rem); letter-spacing: -.02em; white-space: nowrap; }
 .marquee__track span::after { content: "✦"; margin: 0 28px; color: var(--yellow); }
 
+/* Маркер-подчёркивание — небольшой рукописный акцент */
+.marker { position: relative; white-space: nowrap; }
+.marker::after {
+  content: ""; position: absolute; left: -3%; right: -3%; bottom: .04em; height: .38em; z-index: -1;
+  background: var(--yellow); border-radius: 2px 6px 3px 7px; transform: rotate(-1deg);
+}
+
+/* ---------- 5b. About ---------- */
+.about { max-width: 1280px; margin: 88px auto 0; display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 72px); }
+.about__head h2 { font-size: clamp(2.2rem, 4.4vw, 3.4rem); }
+.about__tagline { margin-top: 18px; font-family: var(--f-display); font-weight: 600; font-size: clamp(1.1rem, 1.6vw, 1.3rem); max-width: 22ch; }
+.about__body p { max-width: 56ch; color: var(--muted); font-size: 1.05rem; margin-bottom: 18px; }
+.about__body p:last-of-type { margin-bottom: 26px; }
+.about__tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.about__tags li { padding: 8px 16px; background: #fff; border: var(--border); border-radius: 999px; font-weight: 600; font-size: .88rem; }
+.about__tags li:nth-child(3n+1) { background: var(--yellow); }
+.about__tags li:nth-child(3n+2) { background: var(--mint); }
+
 /* ---------- 6. Projects ---------- */
 .section-head { max-width: 1280px; margin: 0 auto 48px; display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
 .grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(20px, 3vw, 40px); }
@@ -118,7 +136,7 @@ h1 { font-size: clamp(2.7rem, 5.6vw, 5.2rem); line-height: .95; }
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; min-height: 0; }
   .hero__visual { width: min(320px, 78%); margin: 24px 0 24px 8px; }
-  .grid, .contact { grid-template-columns: 1fr; }
+  .grid, .contact, .about { grid-template-columns: 1fr; }
   .card:first-child .card__media { aspect-ratio: 4 / 3; }
   .contact { gap: 40px; }
   .nav__cta { display: none; }
