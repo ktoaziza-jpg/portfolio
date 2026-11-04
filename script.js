@@ -52,9 +52,9 @@ const agencyTabs = [
 
 const agencySections = [
   { id: 'highlights',  num: '01', title: 'Selected highlights',          note: '',                              prefix: 'highlights',  count: 10, ext: 'jpg' },
-  { id: 'social',      num: '02', title: 'Social Media Design',          note: 'Posts / stories / carousels',   prefix: 'social',      count: 24, ext: 'jpg' },
+  { id: 'social',      num: '02', title: 'Social Media Design',          note: 'Posts / stories / carousels',   prefix: 'social',      count: 38, ext: 'jpg' },
   { id: 'banners',     num: '03', title: 'Advertising & Banners',        note: 'Promotional Visuals / Banners', prefix: 'banners',     count: 9,  ext: 'jpg' },
-  { id: 'storyboards', num: '04', title: 'Storyboards & Motion Assets',  note: 'Static Frames / Animation Assets', prefix: 'storyboards', count: 20, ext: 'jpg' }
+  { id: 'storyboards', num: '04', title: 'Storyboards & Motion Assets',  note: 'Static Frames / Animation Assets', prefix: 'storyboards', count: 7, ext: 'jpg' }
 ];
 
 const palette = ['#52284B', '#2A2438', '#C2BFC4', '#8C5D82', '#FCBF49'];
