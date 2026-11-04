@@ -1,17 +1,25 @@
 /* ---------- 1. Проекты: наполняй здесь ----------
-   Большая карточка сверху (Agency Work) и сетка работ под ней.
+   На странице Projects две группы:
+   1) Agency Work — большая обложка, по клику открывается отдельная страница (см. ниже)
+   2) Independent Work — карточки со ссылками на Behance
 
-   Обложки кладём в папку img/ рядом с index.html. Имена файлов:
-     img/agency-work.jpg            — большая карточка
-     img/work-01.jpg ... work-12.jpg — работы, по порядку из списка ниже
+   Обложки кладём в папку img/ рядом с index.html:
+     img/agency-work.jpg             — обложка Agency Work
+     img/work-01.jpg ... work-12.jpg — независимые работы, по порядку из списка ниже
    Пока файла нет, показывается цветная заглушка — сайт не ломается.
-   Нужна своя обложка с другим именем — добавь в работу поле image: 'img/имя.jpg' */
+   Своё имя файла — добавь в работу поле image: 'img/имя.jpg' */
 const featured = {
   title: 'Agency Work',
   text:  'A collection of visual designs created during my time at We Digital',
   years: '2025–2026',
   color: '#52284B',
   image: 'img/agency-work.jpg'
+};
+
+const independent = {
+  title: 'Independent Work',
+  text:  'Independent projects, each one opens on Behance',
+  years: '2024–2025'
 };
 
 const works = [
@@ -29,29 +37,51 @@ const works = [
   { title: 'Stickers',                            tag: 'Illustration', url: 'https://www.behance.net/gallery/201399123/stikery-Stickers' }
 ];
 
+/* ---------- Страница Agency Work: вкладки и разделы ----------
+   Картинки кладём в папку img/agency/ с именами  prefix-01.jpg, prefix-02.jpg ...
+   Например: img/agency/social-01.jpg
+   count — сколько картинок в разделе (поставь своё число),
+   ext   — расширение файлов ('jpg', 'png', 'webp').
+   Раздел «Selected highlights» виден только на вкладке All work. */
+const agencyTabs = [
+  { id: 'all',         label: 'All work' },
+  { id: 'social',      label: 'Social Media Design' },
+  { id: 'banners',     label: 'Banners' },
+  { id: 'storyboards', label: 'Storyboards' }
+];
+
+const agencySections = [
+  { id: 'highlights',  num: '01', title: 'Selected highlights',          note: '',                              prefix: 'highlights',  count: 10, ext: 'jpg' },
+  { id: 'social',      num: '02', title: 'Social Media Design',          note: 'Posts / stories / carousels',   prefix: 'social',      count: 24, ext: 'jpg' },
+  { id: 'banners',     num: '03', title: 'Advertising & Banners',        note: 'Promotional Visuals / Banners', prefix: 'banners',     count: 9,  ext: 'jpg' },
+  { id: 'storyboards', num: '04', title: 'Storyboards & Motion Assets',  note: 'Static Frames / Animation Assets', prefix: 'storyboards', count: 20, ext: 'jpg' }
+];
+
 const palette = ['#52284B', '#2A2438', '#C2BFC4', '#8C5D82', '#FCBF49'];
+const groupHead = d => `
+  <div class="group__head">
+    <div><h3>${d.title}</h3><p>${d.text}</p></div>
+    <span class="card__meta">${d.years}</span>
+  </div>`;
 
 // если файла обложки нет — убираем <img> и возвращаем цветную заглушку
 const cover = src =>
   `<img src="${src}" alt="" loading="lazy" onerror="this.parentElement.classList.remove('has-img'); this.remove()">`;
 
 function renderProjects() {
-  document.getElementById('featured').innerHTML = `
-    <a class="card card--feature" href="#/projects" data-scroll="works" data-cursor="Вниз ↓" style="--c:${featured.color}">
-      <div class="card__media has-img">${cover(featured.image)}</div>
-      <div class="card__body card__body--feature">
-        <div>
-          <h3>${featured.title}</h3>
-          <p>${featured.text}</p>
-        </div>
-        <span class="card__meta">${featured.years}</span>
+  document.getElementById('featured').innerHTML = groupHead(featured) + `
+    <a class="card card--feature" href="#/agency" style="--c:${featured.color}">
+      <div class="card__media has-img">
+        ${cover(featured.image)}
+        <span class="card__cta">Open collection →</span>
       </div>
     </a>`;
 
+  document.getElementById('independentHead').innerHTML = groupHead(independent);
   document.getElementById('works').innerHTML = works.map((w, i) => {
     const img = w.image || `img/work-${String(i + 1).padStart(2, '0')}.jpg`;
     return `
-    <a class="card" href="${w.url}" target="_blank" rel="noopener" data-cursor="Открыть" style="--c:${palette[i % palette.length]}">
+    <a class="card" href="${w.url}" target="_blank" rel="noopener" style="--c:${palette[i % palette.length]}">
       <div class="card__media has-img">${cover(img)}</div>
       <div class="card__body">
         <h3>${w.title}</h3>
@@ -61,19 +91,88 @@ function renderProjects() {
   }).join('');
 }
 
-// клик по большой карточке плавно прокручивает к сетке работ
+// стартовые пропорции плиток-заглушек; настоящая пропорция берётся из картинки после загрузки
+const ratios = [0.8, 1.3, 0.75, 1, 1.6, 0.9];
+
+function renderAgency() {
+  document.getElementById('agencyHead').innerHTML =
+    `<div><h2>${featured.title}</h2><p>${featured.text}</p></div><span class="card__meta">${featured.years}</span>`;
+
+  document.getElementById('agencyTabs').innerHTML = agencyTabs.map((t, i) =>
+    `<button class="tab${i === 0 ? ' is-active' : ''}" role="tab" data-tab="${t.id}">${t.label}</button>`).join('');
+
+  document.getElementById('agencySections').innerHTML = agencySections.map(s => {
+    const tiles = Array.from({ length: s.count }, (_, i) => {
+      const n = String(i + 1).padStart(2, '0');
+      return `<button class="tile" style="--c:${palette[i % palette.length]}; --r:${ratios[i % ratios.length]}" aria-label="${s.title} ${n}">
+        <img src="img/agency/${s.prefix}-${n}.${s.ext}" alt="" loading="lazy"
+             onload="this.parentElement.style.setProperty('--r', this.naturalWidth / this.naturalHeight); this.parentElement.classList.add('is-loaded')"
+             onerror="this.remove()">
+      </button>`;
+    }).join('');
+    return `
+    <section class="sec" data-sec="${s.id}">
+      <header class="sec__head">
+        <h3>${s.num} / ${s.title}</h3>
+        ${s.note ? `<span class="sec__note">${s.note}</span>` : ''}
+      </header>
+      <div class="gallery">${tiles}</div>
+    </section>`;
+  }).join('');
+}
+
+// вкладки: «All work» показывает всё, остальные — только свой раздел
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-scroll]');
-  if (!t) return;
-  e.preventDefault();
-  const target = document.getElementById(t.dataset.scroll);
-  if (!target) return;
-  if (lenis) lenis.scrollTo(target, { offset: -100 });
-  else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  const tab = e.target.closest('.tab');
+  if (!tab) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('is-active', t === tab));
+  document.querySelectorAll('.sec').forEach(sec => {
+    sec.hidden = !(tab.dataset.tab === 'all' || sec.dataset.sec === tab.dataset.tab);
+  });
+});
+
+/* ---------- Просмотр картинки крупно ---------- */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox.querySelector('.lightbox__img');
+let lightboxList = [];
+let lightboxIndex = 0;
+
+function openLightbox(tile) {
+  lightboxList = [...document.querySelectorAll('.sec:not([hidden]) .tile.is-loaded img')];
+  lightboxIndex = lightboxList.indexOf(tile.querySelector('img'));
+  if (lightboxIndex < 0) return;
+  lightboxImg.src = lightboxList[lightboxIndex].src;
+  lightbox.hidden = false;
+  document.body.style.overflow = 'hidden';
+  if (lenis) lenis.stop();
+}
+function closeLightbox() {
+  lightbox.hidden = true;
+  document.body.style.overflow = '';
+  if (lenis) lenis.start();
+}
+function stepLightbox(d) {
+  lightboxIndex = (lightboxIndex + d + lightboxList.length) % lightboxList.length;
+  lightboxImg.src = lightboxList[lightboxIndex].src;
+}
+document.addEventListener('click', e => {
+  const tile = e.target.closest('.tile.is-loaded');
+  if (tile) { openLightbox(tile); return; }
+  if (lightbox.hidden) return;
+  if (e.target.closest('.lightbox__prev')) stepLightbox(-1);
+  else if (e.target.closest('.lightbox__next')) stepLightbox(1);
+  else if (e.target !== lightboxImg) closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if (lightbox.hidden) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') stepLightbox(-1);
+  if (e.key === 'ArrowRight') stepLightbox(1);
 });
 
 /* ---------- 2. Роутинг по #hash + анимация перехода ---------- */
-const titles = { home: 'Home', projects: 'Projects', contacts: 'Contacts' };
+const titles = { home: 'Home', projects: 'Projects', agency: 'Agency Work', contacts: 'Contacts' };
+const navParent = { agency: 'projects' }; // страница внутри раздела подсвечивает его вкладку в меню
 const views  = [...document.querySelectorAll('.view')];
 const links  = [...document.querySelectorAll('.menu a')];
 const pill   = document.querySelector('.menu__pill');
@@ -92,7 +191,7 @@ const routeFromHash = () => {
 };
 
 function movePill() {
-  const active = links.find(l => l.getAttribute('href') === '#/' + current);
+  const active = links.find(l => l.getAttribute('href') === '#/' + (navParent[current] || current));
   links.forEach(l => l.classList.toggle('is-active', l === active));
   pill.style.width = active.offsetWidth + 'px';
   pill.style.transform = `translateX(${active.offsetLeft}px)`;
@@ -134,37 +233,7 @@ function initLenis() {
   requestAnimationFrame(raf);
 }
 
-/* ---------- 4. Кастомный курсор с подписью ---------- */
-function initCursor() {
-  if (reduce || !canHover) return;
-  const cursor = document.querySelector('.cursor');
-  const cursorLabel = cursor.querySelector('.cursor__label');
-  let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
-
-  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  (function raf() {
-    cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
-    cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-    requestAnimationFrame(raf);
-  })();
-
-  document.addEventListener('mouseover', e => {
-    const t = e.target.closest('[data-cursor]');
-    if (!t) return;
-    cursor.classList.add('is-active');
-    cursorLabel.textContent = t.dataset.cursor;
-  });
-  document.addEventListener('mouseout', e => {
-    const t = e.target.closest('[data-cursor]');
-    if (!t) return;
-    const related = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('[data-cursor]');
-    if (related === t) return;
-    cursor.classList.remove('is-active');
-    cursorLabel.textContent = '';
-  });
-}
-
-/* ---------- 5. Магнетизм: бейдж и кнопка «Available for work» тянутся к курсору ---------- */
+/* ---------- 4. Магнетизм: бейдж и кнопка «Available for work» тянутся к курсору ---------- */
 function initMagnetic() {
   if (reduce || !canHover) return;
   document.querySelectorAll('.badge, .nav__cta').forEach(el => {
@@ -187,7 +256,7 @@ function initMagnetic() {
   });
 }
 
-/* ---------- 6. 3D-наклон карточек проектов ---------- */
+/* ---------- 5. 3D-наклон карточек проектов ---------- */
 function initTilt() {
   if (reduce || !canHover) return;
   document.addEventListener('mousemove', e => {
@@ -209,7 +278,7 @@ function initTilt() {
   });
 }
 
-/* ---------- 7. Бегущую строку можно тащить рукой ---------- */
+/* ---------- 6. Бегущую строку можно тащить рукой ---------- */
 function initMarquee() {
   const wrapEl = document.querySelector('.marquee');
   const track = document.querySelector('.marquee__track');
@@ -247,7 +316,7 @@ function initMarquee() {
   );
 }
 
-/* ---------- 8. Появление «Обо мне» и карточек со статистикой при скролле ---------- */
+/* ---------- 7. Появление «Обо мне» и карточек со статистикой при скролле ---------- */
 let revealObserver = null;
 function initReveal() {
   if (!('IntersectionObserver' in window)) return;
@@ -264,14 +333,14 @@ function initReveal() {
   document.querySelectorAll('.reveal, .about__stats').forEach(el => revealObserver.observe(el));
 }
 
-/* ---------- 9. Старт ---------- */
+/* ---------- 8. Старт ---------- */
 renderProjects();
+renderAgency();
 pill.style.transition = 'none';          // чтобы плашка не «выезжала» при загрузке
 show(routeFromHash());
 requestAnimationFrame(() => (pill.style.transition = ''));
 
 initLenis();
-initCursor();
 initMagnetic();
 initTilt();
 initMarquee();
