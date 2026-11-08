@@ -73,14 +73,14 @@ h1 { font-size: clamp(2.7rem, 5.6vw, 5.2rem); line-height: .95; }
 @keyframes fade { from { opacity: 0; } }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Бегущая строка — можно тащить рукой, см. script.js */
+/* Бегущая строка */
 .marquee { margin: 72px calc(-1 * clamp(20px, 4vw, 56px)) 0; padding: 14px 0; overflow: hidden; background: var(--ink); color: var(--bg); transform: rotate(-1.6deg); cursor: grab; touch-action: pan-y; }
 .marquee.is-dragging { cursor: grabbing; }
 .marquee__track { display: flex; width: max-content; will-change: transform; }
 .marquee__track span { display: flex; align-items: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(1.4rem, 3vw, 2.2rem); letter-spacing: -.02em; white-space: nowrap; user-select: none; }
 .marquee__track span::after { content: "✦"; margin: 0 28px; color: var(--yellow); }
 
-/* Органичное пятно-акцент — перекликается с фигурами у портрета на главной */
+/* Органичное пятно-акцент */
 .marker { position: relative; white-space: nowrap; }
 .marker::after {
   content: ""; position: absolute; left: -6%; right: -6%; top: 6%; bottom: -2%; z-index: -1;
@@ -110,7 +110,7 @@ h1 { font-size: clamp(2.7rem, 5.6vw, 5.2rem); line-height: .95; }
 .stat__num { display: block; font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 3.4vw, 2.8rem); color: var(--blue); line-height: 1; }
 .stat__label { display: block; margin-top: 8px; font-size: .88rem; color: var(--muted); font-weight: 600; }
 
-/* Появление при прокрутке — один раз, пока блок входит в экран */
+/* Появление при прокрутке */
 .has-js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--idx, 0) * .1s); }
 .has-js .reveal.is-in { opacity: 1; transform: translateY(0); }
 .has-js .about__stats .stat { opacity: 0; transform: translateY(26px) rotate(var(--r)); transition: opacity .6s var(--ease), transform .6s var(--ease), box-shadow .3s var(--ease); transition-delay: calc(var(--idx, 0) * .1s); }
@@ -173,7 +173,6 @@ a.card { display: block; }
 .sec__head h3 { font-size: clamp(1.3rem, 2.2vw, 1.8rem); letter-spacing: -.02em; }
 .sec__note { color: var(--muted); font-size: .92rem; font-weight: 600; }
 
-/* галерея: блоки как auto-layout в Figma; размеры плиток считает script.js по пропорциям картинок */
 .gallery { --gap: clamp(8px, 1vw, 14px); display: flex; flex-direction: column; gap: var(--gap); }
 .band { display: flex; justify-content: center; }
 .lay { display: flex; flex: none; gap: var(--gap); }
@@ -182,14 +181,13 @@ a.card { display: block; }
 .sec.is-flat .band, .sec.is-flat .lay { display: contents; }
 .tile { flex: none; width: 140px; height: 190px; position: relative; overflow: hidden; padding: 0; background: var(--c); border: var(--border); border-radius: 14px; cursor: default; transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
 .tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.tile.is-loaded { cursor: pointer; }
+.tile.is-loaded { cursor: pointer; } /* Изменили курсор на обычный указатель (руку) */
 .tile.is-loaded:hover { transform: translate(-3px, -3px); box-shadow: 5px 5px 0 var(--ink); }
-
 
 .lightbox { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; overflow: hidden; background: color-mix(in srgb, var(--ink) 94%, transparent); }
 .lightbox[hidden] { display: none; }
-.lightbox__img { max-width: none; border-radius: 10px; cursor: zoom-in; transform-origin: 50% 50%; transition: transform .3s var(--ease); touch-action: none; }
-.lightbox__img.is-zoomed { transform: scale(2.4); cursor: zoom-out; }
+.lightbox__img { max-width: none; border-radius: 10px; cursor: default; transform-origin: 50% 50%; transition: transform .3s var(--ease); touch-action: none; } /* Убрали курсор лупы */
+.lightbox__img.is-zoomed { transform: scale(2.4); cursor: default; } /* Убрали курсор лупы при зуме */
 .lightbox__hint { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; color: color-mix(in srgb, var(--bg) 70%, transparent); font-size: .85rem; font-weight: 600; pointer-events: none; }
 .lightbox__btn { position: absolute; z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--bg); color: var(--ink); border: var(--border); font-size: 1.3rem; font-weight: 700; cursor: pointer; transition: transform .25s var(--ease); }
 .lightbox__btn:hover { transform: scale(1.08); }
@@ -197,7 +195,7 @@ a.card { display: block; }
 .lightbox__prev { left: 20px; top: 50%; margin-top: -24px; }
 .lightbox__next { right: 20px; top: 50%; margin-top: -24px; }
 
-/* ---------- 8. Шторка перехода (цвет зависит от страницы) ---------- */
+/* ---------- 8. Шторка перехода ---------- */
 .wipe { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--blue); color: var(--bg); transform: translateY(100%); pointer-events: none; }
 .wipe__label { font-family: var(--f-display); font-weight: 800; font-size: clamp(3rem, 12vw, 9rem); letter-spacing: -.04em; }
 
@@ -236,4 +234,26 @@ a.card { display: block; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal, .about__stats .stat { opacity: 1 !important; transform: none !important; }
   .grain { display: none; }
+}
+
+
+/* ---------- 12. Языковой переключатель ---------- */
+body.lang-ru .lang-en { display: none !important; }
+body.lang-en .lang-ru { display: none !important; }
+
+.lang-switch {
+  background: transparent;
+  border: var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--ink);
+  transition: background 0.25s, transform 0.25s;
+}
+.lang-switch:hover {
+  background: var(--pink);
+  transform: translateY(-2px);
 }

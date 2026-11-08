@@ -1,75 +1,51 @@
-/* ---------- 1. Проекты: наполняй здесь ----------
-   На странице Projects две группы:
-   1) Agency Work — большая обложка, по клику открывается отдельная страница (см. ниже)
-   2) Independent Work — карточки со ссылками на Behance
-
-   Обложки кладём в папку img/ рядом с index.html:
-     img/agency-work.jpg             — обложка Agency Work
-     img/work-01.jpg ... work-12.jpg — независимые работы, по порядку из списка ниже
-   Пока файла нет, показывается цветная заглушка — сайт не ломается.
-   Своё имя файла — добавь в работу поле image: 'img/имя.jpg' */
+/* ---------- 1. Проекты: наполняй здесь ---------- */
 const featured = {
-  title: 'Agency Work',
-  text:  'A collection of visual designs created during my time at We Digital',
+  title: '<span class="lang-en">Agency Work</span><span class="lang-ru">Работа в агентстве</span>',
+  text:  '<span class="lang-en">A collection of visual designs created during my time at We Digital</span><span class="lang-ru">Подборка визуальных решений, созданных за время работы в We Digital</span>',
   years: '2025–2026',
   color: '#52284B',
   image: 'img/agency-work.jpg'
 };
 
 const independent = {
-  title: 'Independent Work',
-  text:  'Independent projects, each one opens on Behance',
+  title: '<span class="lang-en">Independent Work</span><span class="lang-ru">Независимые проекты</span>',
+  text:  '<span class="lang-en">Independent projects, each one opens on Behance</span><span class="lang-ru">Собственные проекты, каждый открывается на Behance</span>',
   years: '2024–2025'
 };
 
 const works = [
-  { title: 'Social Media Design',                 tag: 'Social Media', url: 'https://www.behance.net/gallery/234881077/Social-Media-Design' },
-  { title: 'Visual Support for Festival',         tag: 'Festival',     url: 'https://www.behance.net/gallery/234880147/Visual-Support-for-Festival' },
-  { title: 'Social Media Print Design',           tag: 'Print',        url: 'https://www.behance.net/gallery/234876853/Social-Media-Print-Design' },
-  { title: 'Social Media Content',                tag: 'Social Media', url: 'https://www.behance.net/gallery/224655413/Social-Media-Content' },
-  { title: 'Branding Elements',                   tag: 'Branding',     url: 'https://www.behance.net/gallery/224651589/Branding-elements' },
-  { title: 'Flyer Design & Brochure',             tag: 'Print',        url: 'https://www.behance.net/gallery/224650055/Flyer-design-Brochure' },
-  { title: 'Marketing Agency Project',            tag: 'Marketing',    url: 'https://www.behance.net/gallery/216876649/Marketing-Agency-Project' },
-  { title: 'Project UzCarlsberg',                 tag: 'Project',      url: 'https://www.behance.net/gallery/216872977/Project-UzCarlsberg' },
-  { title: 'National Illustrations',              tag: 'Illustration', url: 'https://www.behance.net/gallery/216789507/illjustracii-National-Illustrations' },
-  { title: 'Flyer & Brochure for Learning Center', tag: 'Print',       url: 'https://www.behance.net/gallery/216692653/buklet-Flyer-Brochure-for-learning-center' },
-  { title: 'Beauty Salon Logo',                   tag: 'Logo',         url: 'https://www.behance.net/gallery/201401451/logotip-dlja-studii-krasoty-Beauty-salon-logo' },
-  { title: 'Stickers',                            tag: 'Illustration', url: 'https://www.behance.net/gallery/201399123/stikery-Stickers' }
+  { title: '<span class="lang-en">Social Media Design</span><span class="lang-ru">Дизайн соцсетей</span>', tag: '<span class="lang-en">Social Media</span><span class="lang-ru">SMM</span>', url: 'https://www.behance.net/gallery/234881077/Social-Media-Design' },
+  { title: '<span class="lang-en">Visual Support for Festival</span><span class="lang-ru">Айдентика фестиваля</span>', tag: '<span class="lang-en">Festival</span><span class="lang-ru">Фестиваль</span>', url: 'https://www.behance.net/gallery/234880147/Visual-Support-for-Festival' },
+  { title: '<span class="lang-en">Social Media Print Design</span><span class="lang-ru">Дизайн печатной продукции</span>', tag: '<span class="lang-en">Print</span><span class="lang-ru">Print</span>', url: 'https://www.behance.net/gallery/234876853/Social-Media-Print-Design' },
+  { title: '<span class="lang-en">Social Media Content</span><span class="lang-ru">Контент для соцсетей</span>', tag: '<span class="lang-en">Social Media</span><span class="lang-ru">SMM</span>', url: 'https://www.behance.net/gallery/224655413/Social-Media-Content' },
+  { title: '<span class="lang-en">Branding Elements</span><span class="lang-ru">Элементы брендинга</span>', tag: '<span class="lang-en">Branding</span><span class="lang-ru">Брендинг</span>', url: 'https://www.behance.net/gallery/224651589/Branding-elements' },
+  { title: '<span class="lang-en">Flyer Design & Brochure</span><span class="lang-ru">Дизайн флаера и брошюры</span>', tag: '<span class="lang-en">Print</span><span class="lang-ru">Print</span>', url: 'https://www.behance.net/gallery/224650055/Flyer-design-Brochure' },
+  { title: '<span class="lang-en">Marketing Agency Project</span><span class="lang-ru">Проект для агентства</span>', tag: '<span class="lang-en">Marketing</span><span class="lang-ru">Маркетинг</span>', url: 'https://www.behance.net/gallery/216876649/Marketing-Agency-Project' },
+  { title: '<span class="lang-en">Project UzCarlsberg</span><span class="lang-ru">Проект UzCarlsberg</span>', tag: '<span class="lang-en">Project</span><span class="lang-ru">Проект</span>', url: 'https://www.behance.net/gallery/216872977/Project-UzCarlsberg' },
+  { title: '<span class="lang-en">National Illustrations</span><span class="lang-ru">Национальные иллюстрации</span>', tag: '<span class="lang-en">Illustration</span><span class="lang-ru">Иллюстрация</span>', url: 'https://www.behance.net/gallery/216789507/illjustracii-National-Illustrations' },
+  { title: '<span class="lang-en">Flyer & Brochure for Learning Center</span><span class="lang-ru">Брошюра для учебного центра</span>', tag: '<span class="lang-en">Print</span><span class="lang-ru">Print</span>', url: 'https://www.behance.net/gallery/216692653/buklet-Flyer-Brochure-for-learning-center' },
+  { title: '<span class="lang-en">Beauty Salon Logo</span><span class="lang-ru">Логотип салона красоты</span>', tag: '<span class="lang-en">Logo</span><span class="lang-ru">Логотип</span>', url: 'https://www.behance.net/gallery/201401451/logotip-dlja-studii-krasoty-Beauty-salon-logo' },
+  { title: '<span class="lang-en">Stickers</span><span class="lang-ru">Стикеры</span>', tag: '<span class="lang-en">Illustration</span><span class="lang-ru">Иллюстрация</span>', url: 'https://www.behance.net/gallery/201399123/stikery-Stickers' }
 ];
 
-/* ---------- Страница Agency Work: вкладки и разделы ----------
-   Картинки лежат в img/agency/ и называются  prefix-01.jpg, prefix-02.jpg ...
-   Расположение собирается из блоков, как auto-layout в Figma. Числа — номера файлов:
-     R(1, 2, 3)      — ряд: картинки рядом, одной высоты, без обрезки
-     C(1, 2, 3)      — колонка: картинки друг под другом, одной ширины
-     блоки вкладываются друг в друга: R( C(1, 2), R(3, 4) )
-     rng(5, 9)       — то же, что 5, 6, 7, 8, 9
-   Верхний уровень раздела — список блоков сверху вниз. Размеры считаются сами,
-   края всегда ровные. Не знаешь, какой номер где стоит? Открой сайт с ?nums:
-   saidamusaeva.space/?nums#/agency — на каждой картинке появится её номер.
-
-   ext  — расширение файлов ('jpg', 'png', 'webp')
-   mode — 'uniform': все блоки одной высоты, короткие стоят по центру (для лент сторис).
-          Без mode: каждый блок растягивается на всю ширину.
-   Раздел «Selected highlights» виден только на вкладке All work. */
+/* ---------- Страница Agency Work: вкладки и разделы ---------- */
 const R = (...c) => ({ t: 'row', c });
 const C = (...c) => ({ t: 'col', c });
 const rng = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
 
 const agencyTabs = [
-  { id: 'all',         label: 'All work' },
-  { id: 'social',      label: 'Social Media Design' },
-  { id: 'banners',     label: 'Banners' },
-  { id: 'storyboards', label: 'Storyboards' }
+  { id: 'all',         label: '<span class="lang-en">All work</span><span class="lang-ru">Все работы</span>' },
+  { id: 'social',      label: '<span class="lang-en">Social Media Design</span><span class="lang-ru">Дизайн соцсетей</span>' },
+  { id: 'banners',     label: '<span class="lang-en">Banners</span><span class="lang-ru">Баннеры</span>' },
+  { id: 'storyboards', label: '<span class="lang-en">Storyboards</span><span class="lang-ru">Раскадровки</span>' }
 ];
 
 const agencySections = [
-  { id: 'highlights', num: '01', title: 'Selected highlights', note: '', prefix: 'highlights', ext: 'jpg',
+  { id: 'highlights', num: '01', title: '<span class="lang-en">Selected highlights</span><span class="lang-ru">Избранное</span>', note: '', prefix: 'highlights', ext: 'jpg',
     layout: [ R(1, 2), R(...rng(3, 6)), R(...rng(7, 10)) ] },
 
-  { id: 'social', num: '02', title: 'Social Media Design', note: 'Posts / stories / carousels', prefix: 'social', ext: 'jpg',
+  { id: 'social', num: '02', title: '<span class="lang-en">Social Media Design</span><span class="lang-ru">Дизайн соцсетей</span>', note: '<span class="lang-en">Posts / stories / carousels</span><span class="lang-ru">Посты / сторис / карусели</span>', prefix: 'social', ext: 'jpg',
     layout: [
-      // слева колонка из трёх, справа ряды
       R( C(1, 2, 14), C( R(...rng(3, 6)), R(...rng(7, 10)), R(11, 12, 13), R(15, 16, 17) ) ),
       R(...rng(18, 23)),
       R(...rng(24, 27)),
@@ -77,14 +53,13 @@ const agencySections = [
       R(...rng(33, 38))
     ] },
 
-  { id: 'banners', num: '03', title: 'Advertising & Banners', note: 'Promotional Visuals / Banners', prefix: 'banners', ext: 'jpg',
+  { id: 'banners', num: '03', title: '<span class="lang-en">Advertising & Banners</span><span class="lang-ru">Реклама и Баннеры</span>', note: '<span class="lang-en">Promotional Visuals / Banners</span><span class="lang-ru">Промо-материалы / Баннеры</span>', prefix: 'banners', ext: 'jpg',
     layout: [
       R(1, 2),
-      // слева блок 3×2, справа одна большая
       R( C( R(3, 4, 5), R(7, 8, 9) ), 6 )
     ] },
 
-  { id: 'storyboards', num: '04', title: 'Storyboards & Motion Assets', note: 'Static Frames / Animation Assets', prefix: 'storyboards', ext: 'jpg',
+  { id: 'storyboards', num: '04', title: '<span class="lang-en">Storyboards & Motion Assets</span><span class="lang-ru">Раскадровки и Анимация</span>', note: '<span class="lang-en">Static Frames / Animation Assets</span><span class="lang-ru">Статика / Элементы анимации</span>', prefix: 'storyboards', ext: 'jpg',
     mode: 'uniform', layout: rng(1, 7) }
 ];
 
@@ -95,7 +70,6 @@ const groupHead = d => `
     <span class="card__meta">${d.years}</span>
   </div>`;
 
-// если файла обложки нет — убираем <img> и возвращаем цветную заглушку
 const cover = src =>
   `<img src="${src}" alt="" loading="lazy" onerror="this.parentElement.classList.remove('has-img'); this.remove()">`;
 
@@ -104,7 +78,7 @@ function renderProjects() {
     <a class="card card--feature" href="#/agency" style="--c:${featured.color}">
       <div class="card__media has-img">
         ${cover(featured.image)}
-        <span class="card__cta">Open collection →</span>
+        <span class="card__cta"><span class="lang-en">Open collection →</span><span class="lang-ru">Открыть подборку →</span></span>
       </div>
     </a>`;
 
@@ -129,7 +103,6 @@ function tileHtml(sec, n, placeholderRatio) {
   </button>`;
 }
 
-// картинка загрузилась: запоминаем её настоящую пропорцию и пересчитываем раскладку
 function tileLoaded(img) {
   const tile = img.parentElement;
   tile.dataset.r = img.naturalWidth / img.naturalHeight;
@@ -137,7 +110,6 @@ function tileLoaded(img) {
   queueLayout();
 }
 
-// блок раскладки -> HTML (число = картинка, R = ряд, C = колонка)
 function nodeHtml(sec, node, ph) {
   if (typeof node === 'number') return tileHtml(sec, node, ph);
   return `<div class="lay lay--${node.t}">${node.c.map(k => nodeHtml(sec, k, ph)).join('')}</div>`;
@@ -151,7 +123,7 @@ function renderAgency() {
     `<button class="tab${i === 0 ? ' is-active' : ''}" role="tab" data-tab="${t.id}">${t.label}</button>`).join('');
 
   document.getElementById('agencySections').innerHTML = agencySections.map(s => {
-    const ph = s.mode === 'uniform' ? 3.4 : 0.8; // пока картинка не загрузилась
+    const ph = s.mode === 'uniform' ? 3.4 : 0.8; 
     const bands = s.layout.map(b => `<div class="band">${nodeHtml(s, b, ph)}</div>`).join('');
     return `
     <section class="sec" data-sec="${s.id}" data-mode="${s.mode || 'fit'}">
@@ -166,13 +138,7 @@ function renderAgency() {
 
 if (/[?&]nums/.test(location.search)) document.body.classList.add('show-nums');
 
-/* ---------- Раскладка галереи ----------
-   Работает как auto-layout в Figma, но без обрезки: у каждого блока ширина — линейная
-   функция высоты (w = a·h + b). Ряд складывает a и b детей, колонка считает по-своему;
-   отсюда находим высоту, при которой края сходятся ровно, и раздаём размеры вниз.
-   fit      — каждый верхний блок растягивается на всю ширину
-   uniform  — у всех блоков одна высота, короткие стоят по центру
-   На узком экране блоки раскладываются просто по 2 картинки в ряд. */
+/* ---------- Раскладка галереи ---------- */
 const sum = arr => arr.reduce((x, y) => x + y, 0);
 const fl = x => Math.floor(x * 100) / 100;
 
@@ -207,13 +173,12 @@ function placeNode(el, w, h) {
 function layoutSection(sec) {
   const gallery = sec.querySelector('.gallery');
   const W = gallery.clientWidth;
-  if (!W) return; // раздел скрыт
+  if (!W) return; 
   const g = parseFloat(getComputedStyle(gallery).rowGap) || 10;
   const flat = W < 760;
   sec.classList.toggle('is-flat', flat);
 
   if (flat) {
-    // телефон: все картинки по порядку, по 2 в ряд (ленты сторис — по 1)
     const tiles = [...gallery.querySelectorAll('.tile')];
     const size = sec.dataset.mode === 'uniform' ? 1 : 2;
     for (let i = 0; i < tiles.length; i += size) {
@@ -246,7 +211,6 @@ function queueLayout() {
   requestAnimationFrame(() => { layoutQueued = false; layoutAll(); });
 }
 
-// пересчитываем, когда страница появляется на экране или меняется ширина окна
 (function watchGalleryWidth() {
   const box = document.getElementById('agencySections');
   if (!box || !('ResizeObserver' in window)) { addEventListener('resize', queueLayout); return; }
@@ -257,7 +221,6 @@ function queueLayout() {
   }).observe(box);
 })();
 
-// вкладки: «All work» показывает всё, остальные — только свой раздел
 document.addEventListener('click', e => {
   const tab = e.target.closest('.tab');
   if (!tab) return;
@@ -268,10 +231,7 @@ document.addEventListener('click', e => {
   queueLayout();
 });
 
-/* ---------- Просмотр картинки крупно ----------
-   Картинка вписывается в экран (маленькие тоже увеличиваются).
-   Клик по картинке — приблизить, ещё клик — вернуть. В приближении
-   двигай мышь (или палец), чтобы рассматривать нужное место. */
+/* ---------- Просмотр картинки крупно ---------- */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = lightbox.querySelector('.lightbox__img');
 let lightboxList = [];
@@ -351,8 +311,15 @@ document.addEventListener('keydown', e => {
 });
 
 /* ---------- 2. Роутинг по #hash + анимация перехода ---------- */
-const titles = { home: 'Home', projects: 'Projects', agency: 'Agency Work', contacts: 'Contacts' };
-const navParent = { agency: 'projects' }; // страница внутри раздела подсвечивает его вкладку в меню
+const pageTitlesEN = { home: 'Home', projects: 'Projects', agency: 'Agency Work', contacts: 'Contacts' };
+const pageTitlesRU = { home: 'Главная', projects: 'Проекты', agency: 'Работа в агентстве', contacts: 'Контакты' };
+
+function getPageTitle(name) {
+  const lang = document.body.classList.contains('lang-ru') ? 'ru' : 'en';
+  return (lang === 'en' ? pageTitlesEN[name] : pageTitlesRU[name]) || pageTitlesEN['home'];
+}
+
+const navParent = { agency: 'projects' }; 
 const views  = [...document.querySelectorAll('.view')];
 const links  = [...document.querySelectorAll('.menu a')];
 const pill   = document.querySelector('.menu__pill');
@@ -363,15 +330,16 @@ const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 let current = null;
 let busy = false;
-let lenis = null; // создаётся в initLenis(), используется при смене страниц
+let lenis = null; 
 
 const routeFromHash = () => {
   const name = location.hash.replace('#/', '');
-  return titles[name] ? name : 'home';
+  return pageTitlesEN[name] ? name : 'home';
 };
 
 function movePill() {
   const active = links.find(l => l.getAttribute('href') === '#/' + (navParent[current] || current));
+  if (!active) return;
   links.forEach(l => l.classList.toggle('is-active', l === active));
   pill.style.width = active.offsetWidth + 'px';
   pill.style.transform = `translateX(${active.offsetLeft}px)`;
@@ -380,20 +348,19 @@ function movePill() {
 function show(name) {
   current = name;
   views.forEach(v => v.classList.toggle('is-active', v.dataset.view === name));
-  document.title = `${titles[name]} | Saida Musaeva`;
+  document.title = `${getPageTitle(name)} | Saida Musaeva`;
   if (lenis) lenis.scrollTo(0, { immediate: true }); else window.scrollTo(0, 0);
   movePill();
-  initReveal(); // на новой странице могут появиться свои .reveal-элементы
+  initReveal(); 
 }
 
 async function go(name) {
   if (name === current || busy) return;
 
-  // первый заход или reduced-motion: без шторки
   if (current === null || reduce) { show(name); return; }
 
   busy = true;
-  label.textContent = titles[name];
+  label.textContent = getPageTitle(name);
   const opts = { duration: 600, easing: 'cubic-bezier(.7,0,.2,1)', fill: 'forwards' };
 
   await wipe.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], opts).finished;
@@ -402,7 +369,7 @@ async function go(name) {
 
   wipe.getAnimations().forEach(a => a.cancel());
   busy = false;
-  if (routeFromHash() !== current) go(routeFromHash()); // если успели кликнуть во время анимации
+  if (routeFromHash() !== current) go(routeFromHash()); 
 }
 
 /* ---------- 3. Плавный скролл (Lenis) ---------- */
@@ -413,7 +380,7 @@ function initLenis() {
   requestAnimationFrame(raf);
 }
 
-/* ---------- 4. Магнетизм: бейдж и кнопка «Available for work» тянутся к курсору ---------- */
+/* ---------- 4. Магнетизм: бейдж ---------- */
 function initMagnetic() {
   if (reduce || !canHover) return;
   document.querySelectorAll('.badge, .nav__cta').forEach(el => {
@@ -458,7 +425,7 @@ function initTilt() {
   });
 }
 
-/* ---------- 6. Бегущую строку можно тащить рукой ---------- */
+/* ---------- 6. Бегущая строка ---------- */
 function initMarquee() {
   const wrapEl = document.querySelector('.marquee');
   const track = document.querySelector('.marquee__track');
@@ -496,7 +463,7 @@ function initMarquee() {
   );
 }
 
-/* ---------- 7. Появление «Обо мне» и карточек со статистикой при скролле ---------- */
+/* ---------- 7. Появление при скролле ---------- */
 let revealObserver = null;
 function initReveal() {
   if (!('IntersectionObserver' in window)) return;
@@ -516,7 +483,7 @@ function initReveal() {
 /* ---------- 8. Старт ---------- */
 renderProjects();
 renderAgency();
-pill.style.transition = 'none';          // чтобы плашка не «выезжала» при загрузке
+pill.style.transition = 'none';          
 show(routeFromHash());
 requestAnimationFrame(() => (pill.style.transition = ''));
 
@@ -528,3 +495,31 @@ initMarquee();
 window.addEventListener('hashchange', () => go(routeFromHash()));
 window.addEventListener('resize', movePill);
 document.fonts.ready.then(movePill);
+
+/* ---------- 9. Переключение языка ---------- */
+const langToggle = document.getElementById('langToggle');
+
+// Проверяем сохраненный язык в памяти браузера (по умолчанию 'en')
+let currentLang = localStorage.getItem('lang') || 'en';
+document.body.classList.add('lang-' + currentLang);
+document.documentElement.lang = currentLang;
+updateLangBtn();
+
+langToggle.addEventListener('click', () => {
+  document.body.classList.remove('lang-' + currentLang);
+  currentLang = currentLang === 'en' ? 'ru' : 'en';
+  document.body.classList.add('lang-' + currentLang);
+  document.documentElement.lang = currentLang;
+  
+  localStorage.setItem('lang', currentLang); // сохраняем выбор
+  updateLangBtn();
+
+  // Пересчитываем ширину плашки меню и сетку проектов (шрифты могут иметь разную длину)
+  if (typeof movePill === 'function') requestAnimationFrame(movePill);
+  if (typeof queueLayout === 'function') queueLayout();
+});
+
+function updateLangBtn() {
+  langToggle.textContent = currentLang === 'en' ? 'RU' : 'EN';
+  if (current) document.title = `${getPageTitle(current)} | Saida Musaeva`;
+}

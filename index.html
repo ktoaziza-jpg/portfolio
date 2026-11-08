@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%A8%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
   <script>document.documentElement.classList.add('has-js')</script>
 </head>
 <body>
@@ -20,11 +20,26 @@
     <a href="#/home" class="logo">Saida M.</a>
     <nav class="menu" aria-label="Main">
       <span class="menu__pill"></span>
-      <a href="#/home">Home</a>
-      <a href="#/projects">Projects</a>
-      <a href="#/contacts">Contacts</a>
+      <a href="#/home">
+        <span class="lang-en">Home</span>
+        <span class="lang-ru">Главная</span>
+      </a>
+      <a href="#/projects">
+        <span class="lang-en">Projects</span>
+        <span class="lang-ru">Проекты</span>
+      </a>
+      <a href="#/contacts">
+        <span class="lang-en">Contacts</span>
+        <span class="lang-ru">Контакты</span>
+      </a>
     </nav>
-    <a href="#/contacts" class="nav__cta">Available for work</a>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button id="langToggle" class="lang-switch">RU</button>
+      <a href="#/contacts" class="nav__cta">
+        <span class="lang-en">Available for work</span>
+        <span class="lang-ru">Открыта к проектам</span>
+      </a>
+    </div>
   </header>
 
   <main>
@@ -32,15 +47,33 @@
     <section class="view" data-view="home">
       <div class="hero">
         <div class="hero__text">
-          <p class="hero__role fade">UX/UI designer</p>
+          <p class="hero__role fade">
+            <span class="lang-en">UX/UI designer</span>
+            <span class="lang-ru">UX/UI дизайнер</span>
+          </p>
           <h1>
-            <span class="line"><span style="--i:0">Помогаю идеям брендов</span></span>
-            <span class="line"><span style="--i:1">обрести визуальную форму</span></span>
+            <span class="line">
+              <span class="lang-en" style="--i:0">I help brand ideas</span>
+              <span class="lang-ru" style="--i:0">Помогаю идеям брендов</span>
+            </span>
+            <span class="line">
+              <span class="lang-en" style="--i:1">take visual form</span>
+              <span class="lang-ru" style="--i:1">обрести визуальную форму</span>
+            </span>
           </h1>
-          <p class="hero__lead fade">Более 4 лет работаю с digital-контентом, айдентикой, иллюстрацией и печатными материалами. Люблю превращать задачи бренда в понятные, цельные и визуально сильные решения</p>
+          <p class="hero__lead fade">
+            <span class="lang-en">For over 4 years, I have been working with digital content, identity, illustration, and print materials. I love turning brand goals into clear, cohesive, and visually strong solutions.</span>
+            <span class="lang-ru">Более 4 лет работаю с digital-контентом, айдентикой, иллюстрацией и печатными материалами. Люблю превращать задачи бренда в понятные, цельные и визуально сильные решения.</span>
+          </p>
           <div class="hero__actions fade">
-            <a class="btn" href="#/projects">See projects</a>
-            <a class="btn btn--ghost" href="#/contacts">Get in touch</a>
+            <a class="btn" href="#/projects">
+              <span class="lang-en">See projects</span>
+              <span class="lang-ru">Смотреть проекты</span>
+            </a>
+            <a class="btn btn--ghost" href="#/contacts">
+              <span class="lang-en">Get in touch</span>
+              <span class="lang-ru">Связаться</span>
+            </a>
           </div>
         </div>
 
@@ -65,41 +98,106 @@
       </div>
 
       <div class="marquee" aria-hidden="true">
-        <div class="marquee__track"><span>Айдентика</span><span>Digital Design</span><span>Social Media</span><span>Иллюстрация</span><span>Print</span><span>Презентации</span><span>Айдентика</span><span>Digital Design</span><span>Social Media</span><span>Иллюстрация</span><span>Print</span><span>Презентации</span><span>Айдентика</span><span>Digital Design</span><span>Social Media</span><span>Иллюстрация</span><span>Print</span><span>Презентации</span><span>Айдентика</span><span>Digital Design</span><span>Social Media</span><span>Иллюстрация</span><span>Print</span><span>Презентации</span></div>
+        <div class="marquee__track">
+          <!-- Набор 1 -->
+          <span><span class="lang-en">Identity</span><span class="lang-ru">Айдентика</span></span>
+          <span><span class="lang-en">Digital Design</span><span class="lang-ru">Digital Design</span></span>
+          <span><span class="lang-en">Social Media</span><span class="lang-ru">Social Media</span></span>
+          <span><span class="lang-en">Illustration</span><span class="lang-ru">Иллюстрация</span></span>
+          <span><span class="lang-en">Print</span><span class="lang-ru">Print</span></span>
+          <span><span class="lang-en">Presentations</span><span class="lang-ru">Презентации</span></span>
+          <!-- Набор 2 -->
+          <span><span class="lang-en">Identity</span><span class="lang-ru">Айдентика</span></span>
+          <span><span class="lang-en">Digital Design</span><span class="lang-ru">Digital Design</span></span>
+          <span><span class="lang-en">Social Media</span><span class="lang-ru">Social Media</span></span>
+          <span><span class="lang-en">Illustration</span><span class="lang-ru">Иллюстрация</span></span>
+          <span><span class="lang-en">Print</span><span class="lang-ru">Print</span></span>
+          <span><span class="lang-en">Presentations</span><span class="lang-ru">Презентации</span></span>
+          <!-- Набор 3 -->
+          <span><span class="lang-en">Identity</span><span class="lang-ru">Айдентика</span></span>
+          <span><span class="lang-en">Digital Design</span><span class="lang-ru">Digital Design</span></span>
+          <span><span class="lang-en">Social Media</span><span class="lang-ru">Social Media</span></span>
+          <span><span class="lang-en">Illustration</span><span class="lang-ru">Иллюстрация</span></span>
+          <span><span class="lang-en">Print</span><span class="lang-ru">Print</span></span>
+          <span><span class="lang-en">Presentations</span><span class="lang-ru">Презентации</span></span>
+          <!-- Набор 4 -->
+          <span><span class="lang-en">Identity</span><span class="lang-ru">Айдентика</span></span>
+          <span><span class="lang-en">Digital Design</span><span class="lang-ru">Digital Design</span></span>
+          <span><span class="lang-en">Social Media</span><span class="lang-ru">Social Media</span></span>
+          <span><span class="lang-en">Illustration</span><span class="lang-ru">Иллюстрация</span></span>
+          <span><span class="lang-en">Print</span><span class="lang-ru">Print</span></span>
+          <span><span class="lang-en">Presentations</span><span class="lang-ru">Презентации</span></span>
+        </div>
       </div>
 
       <!-- ABOUT -->
       <div class="about">
         <div class="about__head reveal" style="--idx:0">
-          <h2>Обо мне</h2>
-          <p class="about__tagline">Графический дизайнер <span class="marker">из Ташкента</span></p>
+          <h2>
+            <span class="lang-en">About me</span>
+            <span class="lang-ru">Обо мне</span>
+          </h2>
+          <p class="about__tagline">
+            <span class="lang-en">Graphic designer <span class="marker">from Tashkent</span></span>
+            <span class="lang-ru">Графический дизайнер <span class="marker">из Ташкента</span></span>
+          </p>
         </div>
         <div class="about__body">
-          <p class="reveal" style="--idx:1">Работала как и внутри агентства с большим потоком задач, так и самостоятельно на фрилансе с брендами и командами. Поэтому умею быстро переключаться между разными стилями, форматами и индустриями — не теряя внимание к деталям и общей визуальной картинке.</p>
-          <p class="reveal" style="--idx:2">Работаю с айдентикой, digital-дизайном, рекламными материалами, иллюстрацией, презентациями и печатной продукцией. Мне нравится делать не просто красиво, а так, чтобы дизайн действительно подходил бренду и его характеру.</p>
+          <p class="reveal" style="--idx:1">
+            <span class="lang-en">I have worked both in-house at an agency with a heavy flow of tasks and independently as a freelancer with brands and teams. Because of this, I can quickly switch between different styles, formats, and industries — without losing attention to detail and the overall visual picture.</span>
+            <span class="lang-ru">Работала как и внутри агентства с большим потоком задач, так и самостоятельно на фрилансе с брендами и командами. Поэтому умею быстро переключаться между разными стилями, форматами и индустриями — не теряя внимание к деталям и общей визуальной картинке.</span>
+          </p>
+          <p class="reveal" style="--idx:2">
+            <span class="lang-en">I work with brand identity, digital design, promotional materials, illustration, presentations, and print production. I like making things not just beautiful, but truly fitting the brand and its character.</span>
+            <span class="lang-ru">Работаю с айдентикой, digital-дизайном, рекламными материалами, иллюстрацией, презентациями и печатной продукцией. Мне нравится делать не просто красиво, а так, чтобы дизайн действительно подходил бренду и его характеру.</span>
+          </p>
           <ul class="about__tags reveal" style="--idx:3">
-            <li>Айдентика</li>
-            <li>Digital-дизайн</li>
-            <li>Реклама</li>
-            <li>Иллюстрация</li>
-            <li>Презентации</li>
-            <li>Print</li>
+            <li><span class="lang-en">Identity</span><span class="lang-ru">Айдентика</span></li>
+            <li><span class="lang-en">Digital Design</span><span class="lang-ru">Digital-дизайн</span></li>
+            <li><span class="lang-en">Advertising</span><span class="lang-ru">Реклама</span></li>
+            <li><span class="lang-en">Illustration</span><span class="lang-ru">Иллюстрация</span></li>
+            <li><span class="lang-en">Presentations</span><span class="lang-ru">Презентации</span></li>
+            <li><span class="lang-en">Print</span><span class="lang-ru">Print</span></li>
           </ul>
         </div>
       </div>
 
       <div class="about__stats">
-        <div class="stat" style="--idx:0; --r:-1deg"><span class="stat__num">4+</span><span class="stat__label">года в дизайне</span></div>
-        <div class="stat" style="--idx:1; --r:0deg"><span class="stat__num">2</span><span class="stat__label">формата: агентство и фриланс</span></div>
-        <div class="stat" style="--idx:2; --r:1.2deg"><span class="stat__num">6</span><span class="stat__label">направлений дизайна</span></div>
+        <div class="stat" style="--idx:0; --r:-1deg">
+          <span class="stat__num">4+</span>
+          <span class="stat__label">
+            <span class="lang-en">years in design</span>
+            <span class="lang-ru">года в дизайне</span>
+          </span>
+        </div>
+        <div class="stat" style="--idx:1; --r:0deg">
+          <span class="stat__num">2</span>
+          <span class="stat__label">
+            <span class="lang-en">formats: agency and freelance</span>
+            <span class="lang-ru">формата: агентство и фриланс</span>
+          </span>
+        </div>
+        <div class="stat" style="--idx:2; --r:1.2deg">
+          <span class="stat__num">6</span>
+          <span class="stat__label">
+            <span class="lang-en">design fields</span>
+            <span class="lang-ru">направлений дизайна</span>
+          </span>
+        </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
     <section class="view" data-view="projects">
       <div class="section-head">
-        <h2>Selected work</h2>
-        <p class="muted">Case studies, apps and websites.</p>
+        <h2>
+          <span class="lang-en">Selected work</span>
+          <span class="lang-ru">Избранные работы</span>
+        </h2>
+        <p class="muted">
+          <span class="lang-en">Case studies, apps and websites.</span>
+          <span class="lang-ru">Кейсы, приложения и сайты.</span>
+        </p>
       </div>
       <div class="group" id="featured"></div>
       <div class="group group--independent">
@@ -110,7 +208,10 @@
 
     <!-- AGENCY WORK (открывается с карточки на странице Projects) -->
     <section class="view" data-view="agency">
-      <a class="back" href="#/projects">← Projects</a>
+      <a class="back" href="#/projects">
+        <span class="lang-en">← Projects</span>
+        <span class="lang-ru">← Проекты</span>
+      </a>
       <div class="group__head" id="agencyHead"></div>
       <div class="tabs" id="agencyTabs" role="tablist" aria-label="Agency Work"></div>
       <div id="agencySections"></div>
@@ -120,7 +221,10 @@
     <section class="view" data-view="contacts">
       <div class="contact">
         <div>
-          <h2>Have a project in mind?</h2>
+          <h2>
+            <span class="lang-en">Have a project in mind?</span>
+            <span class="lang-ru">Есть проект на примете?</span>
+          </h2>
           <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 16px;">
             <a class="contact__mail" href="mailto:hello@saidamusaeva.space">hello@saidamusaeva.space</a>
             <a class="contact__mail" href="tel:+998330024486">+998 33 002 44 86</a>
@@ -144,13 +248,16 @@
     <button class="lightbox__btn lightbox__prev" aria-label="Назад">←</button>
     <img class="lightbox__img" alt="">
     <button class="lightbox__btn lightbox__next" aria-label="Вперёд">→</button>
-    <p class="lightbox__hint">Click the image to zoom · ← → to browse · Esc to close</p>
+    <p class="lightbox__hint">
+      <span class="lang-en">Click the image to zoom · ← → to browse · Esc to close</span>
+      <span class="lang-ru">Кликните для увеличения · ← → для навигации · Esc для закрытия</span>
+    </p>
   </div>
 
   <!-- Бумажное зерно поверх всего сайта -->
   <div class="grain" aria-hidden="true"></div>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="script.js?v=10"></script>
+  <script src="script.js?v=11"></script>
 </body>
 </html>
