@@ -38,11 +38,24 @@ const works = [
 ];
 
 /* ---------- Страница Agency Work: вкладки и разделы ----------
-   Картинки кладём в папку img/agency/ с именами  prefix-01.jpg, prefix-02.jpg ...
-   Например: img/agency/social-01.jpg
-   count — сколько картинок в разделе (поставь своё число),
-   ext   — расширение файлов ('jpg', 'png', 'webp').
+   Картинки лежат в img/agency/ и называются  prefix-01.jpg, prefix-02.jpg ...
+   Расположение собирается из блоков, как auto-layout в Figma. Числа — номера файлов:
+     R(1, 2, 3)      — ряд: картинки рядом, одной высоты, без обрезки
+     C(1, 2, 3)      — колонка: картинки друг под другом, одной ширины
+     блоки вкладываются друг в друга: R( C(1, 2), R(3, 4) )
+     rng(5, 9)       — то же, что 5, 6, 7, 8, 9
+   Верхний уровень раздела — список блоков сверху вниз. Размеры считаются сами,
+   края всегда ровные. Не знаешь, какой номер где стоит? Открой сайт с ?nums:
+   saidamusaeva.space/?nums#/agency — на каждой картинке появится её номер.
+
+   ext  — расширение файлов ('jpg', 'png', 'webp')
+   mode — 'uniform': все блоки одной высоты, короткие стоят по центру (для лент сторис).
+          Без mode: каждый блок растягивается на всю ширину.
    Раздел «Selected highlights» виден только на вкладке All work. */
+const R = (...c) => ({ t: 'row', c });
+const C = (...c) => ({ t: 'col', c });
+const rng = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
+
 const agencyTabs = [
   { id: 'all',         label: 'All work' },
   { id: 'social',      label: 'Social Media Design' },
@@ -51,10 +64,28 @@ const agencyTabs = [
 ];
 
 const agencySections = [
-  { id: 'highlights',  num: '01', title: 'Selected highlights',          note: '',                              prefix: 'highlights',  count: 10, ext: 'jpg' },
-  { id: 'social',      num: '02', title: 'Social Media Design',          note: 'Posts / stories / carousels',   prefix: 'social',      count: 38, ext: 'jpg' },
-  { id: 'banners',     num: '03', title: 'Advertising & Banners',        note: 'Promotional Visuals / Banners', prefix: 'banners',     count: 9,  ext: 'jpg' },
-  { id: 'storyboards', num: '04', title: 'Storyboards & Motion Assets',  note: 'Static Frames / Animation Assets', prefix: 'storyboards', count: 7, ext: 'jpg' }
+  { id: 'highlights', num: '01', title: 'Selected highlights', note: '', prefix: 'highlights', ext: 'jpg',
+    layout: [ R(1, 2), R(...rng(3, 6)), R(...rng(7, 10)) ] },
+
+  { id: 'social', num: '02', title: 'Social Media Design', note: 'Posts / stories / carousels', prefix: 'social', ext: 'jpg',
+    layout: [
+      // слева колонка из трёх, справа ряды
+      R( C(1, 2, 14), C( R(...rng(3, 6)), R(...rng(7, 10)), R(11, 12, 13), R(15, 16, 17) ) ),
+      R(...rng(18, 23)),
+      R(...rng(24, 27)),
+      R(...rng(28, 32)),
+      R(...rng(33, 38))
+    ] },
+
+  { id: 'banners', num: '03', title: 'Advertising & Banners', note: 'Promotional Visuals / Banners', prefix: 'banners', ext: 'jpg',
+    layout: [
+      R(1, 2),
+      // слева блок 3×2, справа одна большая
+      R( C( R(3, 4, 5), R(7, 8, 9) ), 6 )
+    ] },
+
+  { id: 'storyboards', num: '04', title: 'Storyboards & Motion Assets', note: 'Static Frames / Animation Assets', prefix: 'storyboards', ext: 'jpg',
+    mode: 'uniform', layout: rng(1, 7) }
 ];
 
 const palette = ['#52284B', '#2A2438', '#C2BFC4', '#8C5D82', '#FCBF49'];
@@ -91,8 +122,26 @@ function renderProjects() {
   }).join('');
 }
 
-// стартовые пропорции плиток-заглушек; настоящая пропорция берётся из картинки после загрузки
-const ratios = [0.8, 1.3, 0.75, 1, 1.6, 0.9];
+function tileHtml(sec, n, placeholderRatio) {
+  const num = String(n).padStart(2, '0');
+  return `<button class="tile" data-n="${n}" data-r="${placeholderRatio}" style="--c:${palette[(n - 1) % palette.length]}" aria-label="${sec.title} ${num}">
+    <img src="img/agency/${sec.prefix}-${num}.${sec.ext}" alt="" loading="lazy" decoding="async" onload="tileLoaded(this)" onerror="this.remove()">
+  </button>`;
+}
+
+// картинка загрузилась: запоминаем её настоящую пропорцию и пересчитываем раскладку
+function tileLoaded(img) {
+  const tile = img.parentElement;
+  tile.dataset.r = img.naturalWidth / img.naturalHeight;
+  tile.classList.add('is-loaded');
+  queueLayout();
+}
+
+// блок раскладки -> HTML (число = картинка, R = ряд, C = колонка)
+function nodeHtml(sec, node, ph) {
+  if (typeof node === 'number') return tileHtml(sec, node, ph);
+  return `<div class="lay lay--${node.t}">${node.c.map(k => nodeHtml(sec, k, ph)).join('')}</div>`;
+}
 
 function renderAgency() {
   document.getElementById('agencyHead').innerHTML =
@@ -102,24 +151,111 @@ function renderAgency() {
     `<button class="tab${i === 0 ? ' is-active' : ''}" role="tab" data-tab="${t.id}">${t.label}</button>`).join('');
 
   document.getElementById('agencySections').innerHTML = agencySections.map(s => {
-    const tiles = Array.from({ length: s.count }, (_, i) => {
-      const n = String(i + 1).padStart(2, '0');
-      return `<button class="tile" style="--c:${palette[i % palette.length]}; --r:${ratios[i % ratios.length]}" aria-label="${s.title} ${n}">
-        <img src="img/agency/${s.prefix}-${n}.${s.ext}" alt="" loading="lazy"
-             onload="this.parentElement.style.setProperty('--r', this.naturalWidth / this.naturalHeight); this.parentElement.classList.add('is-loaded')"
-             onerror="this.remove()">
-      </button>`;
-    }).join('');
+    const ph = s.mode === 'uniform' ? 3.4 : 0.8; // пока картинка не загрузилась
+    const bands = s.layout.map(b => `<div class="band">${nodeHtml(s, b, ph)}</div>`).join('');
     return `
-    <section class="sec" data-sec="${s.id}">
+    <section class="sec" data-sec="${s.id}" data-mode="${s.mode || 'fit'}">
       <header class="sec__head">
         <h3>${s.num} / ${s.title}</h3>
         ${s.note ? `<span class="sec__note">${s.note}</span>` : ''}
       </header>
-      <div class="gallery">${tiles}</div>
+      <div class="gallery">${bands}</div>
     </section>`;
   }).join('');
 }
+
+if (/[?&]nums/.test(location.search)) document.body.classList.add('show-nums');
+
+/* ---------- Раскладка галереи ----------
+   Работает как auto-layout в Figma, но без обрезки: у каждого блока ширина — линейная
+   функция высоты (w = a·h + b). Ряд складывает a и b детей, колонка считает по-своему;
+   отсюда находим высоту, при которой края сходятся ровно, и раздаём размеры вниз.
+   fit      — каждый верхний блок растягивается на всю ширину
+   uniform  — у всех блоков одна высота, короткие стоят по центру
+   На узком экране блоки раскладываются просто по 2 картинки в ряд. */
+const sum = arr => arr.reduce((x, y) => x + y, 0);
+const fl = x => Math.floor(x * 100) / 100;
+
+function measureNode(el, g) {
+  let m;
+  if (el.classList.contains('tile')) {
+    m = { a: parseFloat(el.dataset.r) || 1, b: 0 };
+  } else {
+    const kids = [...el.children];
+    kids.forEach(k => measureNode(k, g));
+    const n = kids.length;
+    if (el.classList.contains('lay--row')) {
+      m = { a: sum(kids.map(k => k._m.a)), b: sum(kids.map(k => k._m.b)) + (n - 1) * g };
+    } else {
+      const a = 1 / sum(kids.map(k => 1 / k._m.a));
+      m = { a, b: a * (sum(kids.map(k => k._m.b / k._m.a)) - (n - 1) * g) };
+    }
+  }
+  el._m = m;
+  return m;
+}
+
+function placeNode(el, w, h) {
+  el.style.width = fl(w) + 'px';
+  el.style.height = fl(h) + 'px';
+  if (el.classList.contains('tile')) return;
+  const kids = [...el.children];
+  if (el.classList.contains('lay--row')) kids.forEach(k => placeNode(k, k._m.a * h + k._m.b, h));
+  else kids.forEach(k => placeNode(k, w, (w - k._m.b) / k._m.a));
+}
+
+function layoutSection(sec) {
+  const gallery = sec.querySelector('.gallery');
+  const W = gallery.clientWidth;
+  if (!W) return; // раздел скрыт
+  const g = parseFloat(getComputedStyle(gallery).rowGap) || 10;
+  const flat = W < 760;
+  sec.classList.toggle('is-flat', flat);
+
+  if (flat) {
+    // телефон: все картинки по порядку, по 2 в ряд (ленты сторис — по 1)
+    const tiles = [...gallery.querySelectorAll('.tile')];
+    const size = sec.dataset.mode === 'uniform' ? 1 : 2;
+    for (let i = 0; i < tiles.length; i += size) {
+      const chunk = tiles.slice(i, i + size);
+      const rs = chunk.map(t => parseFloat(t.dataset.r) || 1);
+      const h = (W - (chunk.length - 1) * g - 1) / sum(rs);
+      chunk.forEach((t, k) => placeNode(t, rs[k] * h, h));
+    }
+    return;
+  }
+
+  const bands = [...gallery.querySelectorAll(':scope > .band')].map(b => {
+    const node = b.firstElementChild;
+    return { node, m: measureNode(node, g) };
+  });
+  const heights = bands.map(({ m }) => (W - m.b - 1) / m.a);
+  const common = sec.dataset.mode === 'uniform' ? Math.min(...heights) : 0;
+  bands.forEach(({ node, m }, i) => {
+    const h = common || heights[i];
+    placeNode(node, m.a * h + m.b, h);
+  });
+}
+
+function layoutAll() { document.querySelectorAll('.sec:not([hidden])').forEach(layoutSection); }
+
+let layoutQueued = false;
+function queueLayout() {
+  if (layoutQueued) return;
+  layoutQueued = true;
+  requestAnimationFrame(() => { layoutQueued = false; layoutAll(); });
+}
+
+// пересчитываем, когда страница появляется на экране или меняется ширина окна
+(function watchGalleryWidth() {
+  const box = document.getElementById('agencySections');
+  if (!box || !('ResizeObserver' in window)) { addEventListener('resize', queueLayout); return; }
+  let lastW = 0;
+  new ResizeObserver(entries => {
+    const w = Math.round(entries[0].contentRect.width);
+    if (w !== lastW) { lastW = w; queueLayout(); }
+  }).observe(box);
+})();
 
 // вкладки: «All work» показывает всё, остальные — только свой раздел
 document.addEventListener('click', e => {
@@ -129,32 +265,76 @@ document.addEventListener('click', e => {
   document.querySelectorAll('.sec').forEach(sec => {
     sec.hidden = !(tab.dataset.tab === 'all' || sec.dataset.sec === tab.dataset.tab);
   });
+  queueLayout();
 });
 
-/* ---------- Просмотр картинки крупно ---------- */
+/* ---------- Просмотр картинки крупно ----------
+   Картинка вписывается в экран (маленькие тоже увеличиваются).
+   Клик по картинке — приблизить, ещё клик — вернуть. В приближении
+   двигай мышь (или палец), чтобы рассматривать нужное место. */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = lightbox.querySelector('.lightbox__img');
 let lightboxList = [];
 let lightboxIndex = 0;
+let zoomed = false;
+let baseRect = null;
 
+function fitLightbox() {
+  const nw = lightboxImg.naturalWidth, nh = lightboxImg.naturalHeight;
+  if (!nw) return;
+  const s = Math.min(innerWidth * 0.9 / nw, innerHeight * 0.84 / nh);
+  lightboxImg.style.width = Math.round(nw * s) + 'px';
+  lightboxImg.style.height = Math.round(nh * s) + 'px';
+  lightboxImg.style.visibility = 'visible';
+}
+function resetZoom() {
+  zoomed = false;
+  lightboxImg.classList.remove('is-zoomed');
+  lightboxImg.style.transformOrigin = '';
+}
+function setOrigin(e) {
+  if (!baseRect) return;
+  const x = Math.min(1, Math.max(0, (e.clientX - baseRect.left) / baseRect.width)) * 100;
+  const y = Math.min(1, Math.max(0, (e.clientY - baseRect.top) / baseRect.height)) * 100;
+  lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+}
+function showInLightbox(img) {
+  resetZoom();
+  lightboxImg.style.visibility = 'hidden';
+  lightboxImg.style.width = lightboxImg.style.height = '';
+  lightboxImg.src = img.currentSrc || img.src;
+}
 function openLightbox(tile) {
   lightboxList = [...document.querySelectorAll('.sec:not([hidden]) .tile.is-loaded img')];
   lightboxIndex = lightboxList.indexOf(tile.querySelector('img'));
   if (lightboxIndex < 0) return;
-  lightboxImg.src = lightboxList[lightboxIndex].src;
+  showInLightbox(lightboxList[lightboxIndex]);
   lightbox.hidden = false;
   document.body.style.overflow = 'hidden';
   if (lenis) lenis.stop();
 }
 function closeLightbox() {
   lightbox.hidden = true;
+  resetZoom();
   document.body.style.overflow = '';
   if (lenis) lenis.start();
 }
 function stepLightbox(d) {
   lightboxIndex = (lightboxIndex + d + lightboxList.length) % lightboxList.length;
-  lightboxImg.src = lightboxList[lightboxIndex].src;
+  showInLightbox(lightboxList[lightboxIndex]);
 }
+
+lightboxImg.addEventListener('load', fitLightbox);
+addEventListener('resize', () => { if (!lightbox.hidden) fitLightbox(); });
+lightboxImg.addEventListener('click', e => {
+  if (zoomed) { resetZoom(); return; }
+  baseRect = lightboxImg.getBoundingClientRect();
+  setOrigin(e);
+  zoomed = true;
+  lightboxImg.classList.add('is-zoomed');
+});
+lightboxImg.addEventListener('pointermove', e => { if (zoomed) setOrigin(e); });
+
 document.addEventListener('click', e => {
   const tile = e.target.closest('.tile.is-loaded');
   if (tile) { openLightbox(tile); return; }
