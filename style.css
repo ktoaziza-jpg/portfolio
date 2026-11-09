@@ -78,7 +78,10 @@ h1 { font-size: clamp(2.7rem, 5.6vw, 5.2rem); line-height: .95; }
 .marquee.is-dragging { cursor: grabbing; }
 .marquee__track { display: flex; width: max-content; will-change: transform; }
 .marquee__track span { display: flex; align-items: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(1.4rem, 3vw, 2.2rem); letter-spacing: -.02em; white-space: nowrap; user-select: none; }
-.marquee__track span::after { content: "✦"; margin: 0 28px; color: var(--yellow); }
+/* Разделитель между словами — картинка. Чтобы поставить свою (например, из Canva),
+   положи файл в img/ и поменяй имя в --star ниже. Размер задаёт width/height. */
+.marquee { --star: url("img/star.png"); }
+.marquee__track > span::after { content: ""; flex: none; width: 1em; height: 1em; margin: 0 28px; background: var(--star) center / contain no-repeat; }
 
 /* Органичное пятно-акцент */
 .marker { position: relative; white-space: nowrap; }
